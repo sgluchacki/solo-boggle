@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mind-Boggling Word Search</title>
     <link rel="stylesheet" href="css/main.css">
-    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="js/dictionary.js"></script>
+    <script defer src="js/main.js"></script>
 </head>
 <body>
     <h1>Welcome to the Amazing 1-Player Mind-Boggling Word Search Experience!!</h1>
@@ -28,6 +30,20 @@
             <div class="letters"></div>
             <div class="letters"></div>
         </section>
+
+        <div id="sidebar">
+            <div id="current-word"></div>
+            <button id="submit"></button>
+            <button id="replay"></button>
+        </div>
+        <div id="data-display">
+            <div id="found-words"></div>
+            <h2 id="message"></h2>
+            <h3 id="timer"></h3>
+            <h3 id="score"></h3>
+
+        </div>
+
 
     </main>
 </body>
