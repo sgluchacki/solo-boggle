@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(4, 12vmin);
+    grid-template-rows: repeat(4, 12vmin);
+    gap: 0vmin;   
+}
+
+.letters {
+    width: 12vmin;
+    height: 12vmin;
+    gap: 0vmin;
+    border: 2px solid gray;
+}
