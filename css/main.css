@@ -15,3 +15,7 @@
     gap: 0vmin;
     border: 2px solid gray;
 }
+
+#replay {
+    visibility: hidden;
+}

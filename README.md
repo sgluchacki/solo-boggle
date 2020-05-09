@@ -20,7 +20,7 @@ Please note that the Qu tile counts as two letters.
 
 I'll put some screenshots here. I just have to, ummm...., build it first. In the meanwhile, here's the wireframe!
 
-<img scr="images/wireframe.png>
+<img src="images/wireframe.png">
 
 ## Technologies Used
 
