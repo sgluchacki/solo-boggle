@@ -66,8 +66,6 @@ function renderBoard() {
         // console.log(`$boardArray[${i}] --->  ${$boardArray[i]}`);
         $($boardArray[i]).text(board[i]);  // WTF?!?!?!?!!?!?
     }
-    
-
 }
 
 // checks word against dictionary for validity and against foundWords - called when submit word button clicked
@@ -75,10 +73,16 @@ function wordCheck(word) {
     // after submit compare submitted word with dictionary. 
     // if match found call addScore and probably kick out message
     // if no match insult the user
+    isWordValid = dictionary.some(function(validWord) {
+        return validWord === word.toLowerCase();
+    });
+    return isWordValid;
 } 
 
 // establishes what clicks are valid, and logs usedLetters and words in progress
-function clickBoard(click) {} 
+function clickBoard(click) {
+    // need to render word in progress. probably do here 
+} 
 
 // when words are found and valid, adds to score based on word length. Establish score based on length of word in the dictionary to account for the Qu tile
 function addScore(word) {
@@ -103,7 +107,8 @@ function countDown() {}
 // upon timer end ends board click event, reveals final score, and displays replay button
 function gameOver() {} 
 
-// console.log(dictionary.length);
+console.log(dictionary.length);
+console.log(typeof(dictionary));
 // console.log($boardArray);
 // console.log('boardArray[4]: ', $boardArray[4]);
 // console.log('board: ', board);
