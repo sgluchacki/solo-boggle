@@ -14,6 +14,10 @@
     height: 12vmin;
     gap: 0vmin;
     border: 2px solid gray;
+    line-height: 12vmin;
+    text-align: center;
+    vertical-align: center;
+    font-size: 8vmin;
 }
 
 #replay {

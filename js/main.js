@@ -2,6 +2,9 @@
 // Letter distribution via the distribution of tiles in Scrabble
 // Casing as listed for display convenience
 const letters = ['A','A','A','A','A','A','A','A','A','B','B','C','C','D','D','D','D','E','E','E','E','E','E','E','E','E','E','E','E','F','F','G','G','G','H','H','I','I','I','I','I','I','I','I','I','J','K','L','L','L','L','M','M','N','N','N','N','N','N','O','O','O','O','O','O','O','O','P','P','Qu','R','R','R','R','R','R','S','S','S','S','T','T','T','T','T','T','U','U','U','U','V','V','W','W','X','Y','Y','Z']
+const insults = ['Dats nat e werd.', 'Seriously?', 'Are you even trying?', 'Why do you even bother?', 'Ughh...', 'But... I mean... How?', 'Try again.', 'Remember Hooked on Phonics? Look into it.', 'Questionable, at best.', 'Practice makes perfect.', 'Consider resetting the board.', 'No.', 'No, no, and no.', 'Your skill never ceases to underwhelm me.', 'If I throw a stick, will you leave?', 'Your inferiority complex is fully justified.', 'Do you have delusions of adequacy?', 'I like the way you try.', "I like your approach. Now let's see your departure.", 'You fool!'];
+const accolades = ['Another one.', 'Nailed it.', 'Nice!', 'Great!', 'Next stop: Scripps Spelling Bee!', 'Genius!', 'Impressive.', 'Are you Will Shortz?', 'Nigel Richards? Is that you?', "You're on fire!", 'Keep up the good work!', 'Yippee ki-yay!', "You're a gift to those around you.", 'You are one smart cookie!', 'Inspiring!', "You're a candle in the dark.", 'Awesome!', 'Crushing it!', "Are you cheating? I feel like you're cheating.", "Is 'on fleek' still a thing? If it is, you're totally on fleek."];
+
 
 // state variables
 let board;
@@ -45,7 +48,13 @@ function init() {
             null, null, null, null];
     //initiate timer maybe 5 minutes?
     foundWords = [];
-    usedLetters = {};
+    usedLetters = {};       // dear past me, why did you make this an object?
+                            // key= divId to account for multiple occurences of a letter        
+                            // object of objects? How best to record clickable/unclickable?
+                            // letter value, clickable, 
+                            // is this the best structure for boardArray? array of objects?
+                            // rowIdx, colIdx, clickable, letter
+                            // final answer. usedLetters and boardArray are associated arrays of objects
     wordInProgress = '';
     render();
     renderBoard(); // randomizer in renderBoard don't call in render
@@ -68,7 +77,8 @@ function renderBoard() {
     }
 }
 
-// checks word against dictionary for validity and against foundWords - called when submit word button clicked
+// checks word against dictionary for validity and against foundWords 
+// called when submit word button clicked
 function wordCheck(word) {
     // after submit compare submitted word with dictionary. 
     // if match found call addScore and probably kick out message
@@ -76,13 +86,34 @@ function wordCheck(word) {
     isWordValid = dictionary.some(function(validWord) {
         return validWord === word.toLowerCase();
     });
-    return isWordValid;
+    if (isWordValid) {
+        foundWords.push(word);
+        addScore(word);
+        $message.text(accolades[Math.floor(Math.random() * accolades.length)]);       // make an array of different message options
+    } else {
+        $message.text(insults[Math.floor(Math.random() * insults.length)])   // same here, Math.random it
+    }
+    return isWordValid;     // necessary? 
 } 
 
 // establishes what clicks are valid, and logs usedLetters and words in progress
 function clickBoard(click) {
     // need to render word in progress. probably do here 
+    // push clicked letters to, umm i guess, usedLetters object
+    const clickIdx = $(click.target).attr('id'); // pull from click event
+    const rowIdx = clickIdx.slice(1, 2);
+    const colIdx = clickIdx.slice(3, 4);
+    console.log(click.target);
+    console.log('row index: ', rowIdx);
+    console.log('column index: ', colIdx);
+    determineClickable();
 } 
+
+function determineClickable() {
+    // use id from click
+    // clickable is +/- 1 in both indices setminus clicked letters
+    // change shade of background for clickable and unclickable?
+}
 
 // when words are found and valid, adds to score based on word length. Establish score based on length of word in the dictionary to account for the Qu tile
 function addScore(word) {
@@ -99,6 +130,7 @@ function addScore(word) {
     } else {
         score += 11
     }
+    render();
 } 
 
 // counts down from set time limit
@@ -107,8 +139,10 @@ function countDown() {}
 // upon timer end ends board click event, reveals final score, and displays replay button
 function gameOver() {} 
 
-console.log(dictionary.length);
-console.log(typeof(dictionary));
+
+
+// console.log(dictionary.length);
+// console.log(typeof(dictionary));
 // console.log($boardArray);
 // console.log('boardArray[4]: ', $boardArray[4]);
 // console.log('board: ', board);
