@@ -89,7 +89,7 @@ function renderBoard() {
             letterValue: board[i],
             clickable: true
         });
-        // console.log(letterObjects[i]);
+        console.log(letterObjects[i]);
     }
 }
 
@@ -121,16 +121,24 @@ function clickBoard(click) {
     rowClickIdx = parseInt(clickIdx.slice(1, 2));
     colClickIdx = parseInt(clickIdx.slice(3, 4));
 
-    // if target clickable is false, return
-    letterObjects.forEach(function (letterObject) {
-        if (letterObject.cellIdx === clickIdx) {
-            console.log('This should match what I clicked: ', letterObject);
-            if (letterObject.clickable === false) {
-                return;
-            }
-        }
-    });
+    // letterObjects[clickIdx].clickable
 
+    // let functionBreak = true;
+    // // if target clickable is false, return
+    // letterObjects.forEach(function (letterObject) {
+    //     if (letterObject.cellIdx === clickIdx) {
+    //         console.log('This should match what I clicked: ', letterObject);
+    //         if (letterObject.clickable === false) {
+    //             console.log('false');
+    //             functionBreak = false;
+    //         }
+    //     }
+    // });
+
+    console.log(letterObjects.findIndex(letterObject => letterObject.cellIdx === clickIdx));
+    // explain this
+    if (!letterObjects[letterObjects.findIndex(letterObject => letterObject.cellIdx === clickIdx)].clickable) return;
+    console.log('test');
     // good form to disable clicks before here. 
     // should be satisfactory to disable inside determineClick
     letterObjects.forEach(function(letterObject) {
@@ -205,11 +213,15 @@ function submitWord(click) {
 
     // reset wordInProgress
     wordInProgress = '';
+
+    // reset clickability
     
 }
 
 // counts down from set time limit
-function countDown() {} 
+// function countDown() {
+//     timer = setInterval(function() {}, 1000);
+// } 
 
 // upon timer end ends board click event, reveals final score, and displays replay button
 function gameOver() {} 
