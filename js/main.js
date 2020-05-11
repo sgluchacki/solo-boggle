@@ -2,8 +2,8 @@
 // Letter distribution via the distribution of tiles in Scrabble
 // Casing as listed for display convenience
 const letters = ['A','A','A','A','A','A','A','A','A','B','B','C','C','D','D','D','D','E','E','E','E','E','E','E','E','E','E','E','E','F','F','G','G','G','H','H','I','I','I','I','I','I','I','I','I','J','K','L','L','L','L','M','M','N','N','N','N','N','N','O','O','O','O','O','O','O','O','P','P','Qu','R','R','R','R','R','R','S','S','S','S','T','T','T','T','T','T','U','U','U','U','V','V','W','W','X','Y','Y','Z']
-const insults = ['Dats nat e werd.', "That's not a word, silly!", 'Seriously?', 'Are you even trying?', 'Why do you even bother?', 'Ughh...', 'But... I mean... How?', 'Try again.', 'Remember Hooked on Phonics? Look into it.', 'Questionable, at best.', 'Practice makes perfect.', 'Consider resetting the board.', 'No.', 'No, no, and no.', 'Your skill never ceases to underwhelm me.', 'If I throw a stick, will you leave?', 'Your inferiority complex is fully justified.', 'Do you have delusions of adequacy?', 'I like the way you try.', "I like your approach. Now let's see your departure.", 'You fool!'];
-const accolades = ['Another one.', 'Nailed it.', 'Nice!', 'Great!', 'Next stop: Scripps Spelling Bee!', 'Genius!', 'Impressive.', 'Are you Will Shortz?', 'Nigel Richards? Is that you?', "You're on fire!", 'Keep up the good work!', 'Yippee ki-yay!', "You're a gift to those around you.", 'You are one smart cookie!', 'Inspiring!', "You're a candle in the dark.", 'Awesome!', 'Crushing it!', "Are you cheating? I feel like you're cheating.", "Is 'on fleek' still a thing? If it is, you're totally on fleek."];
+const insults = ['Dats nat e werd.', "That's not a word, silly!", 'Seriously? No.', 'Are you even trying?', 'Why do you even bother?', 'Ughh...', 'But... I mean... How?... No.', 'Try again.', 'Remember Hooked on Phonics? Look into it.', 'Questionable at best.', 'Practice makes perfect! Keep trying.', 'Consider resetting the board.', 'No.', 'No, no, and no.', 'Umm... No.', 'Your skill never ceases to underwhelm me.', 'If I throw a stick, will you leave?', 'Your inferiority complex is fully justified.', 'Do you have delusions of adequacy?', 'I like the way you try.', "I like your approach. Now let's see your departure.", 'You fool!'];
+const accolades = ['Another one.', 'Nailed it.', 'Nice!', 'Great!', 'Next stop: Scripps Spelling Bee!', 'Genius!', 'Impressive.', 'Are you Will Shortz?', 'Nigel Richards? Is that you?', "You're on fire!", 'Keep up the good work!', 'Yippee ki-yay!', "You're a gift to those around you.", 'You are one smart cookie!', 'Inspiring!', "You're a candle in the dark.", 'Awesome!', 'Crushing it!', "Are you cheating? I feel like you're cheating.", "Is 'on fleek' still a thing? If it is you're totally on fleek.", "Yes!", 'Yes, yes, and yes!', "Where's the applause emoji?", "You're such a nerd; like, in a good way."];
 
 
 // state variables
@@ -12,6 +12,7 @@ let score;
 let foundWords;         //to avoid using the same word for more than one play
 let usedLetters;        // changes after every click during a turn
 let timer;
+let secondsRemaining;
 let wordInProgress;     // word that is being built by clicks
 let letterObjects;      // contains objects representing the letters and their location on the board
 let colClickIdx;
@@ -28,7 +29,7 @@ $submitButton = $('#submit'); // button for checking word
 $replayButton = $('#replay'); // button that pops up after game ends
 $score = $('#score'); // to display score
 $foundWords = $('#found-words'); // maybe. just displays list of already found words
-$timer = $('timer'); // its a timer
+$timer = $('#timer'); // its a timer
 
 
 // event listeners
@@ -60,6 +61,13 @@ function init() {
                             // final answer. usedLetters and boardArray are associated arrays of objects
     wordInProgress = '';
     $message.text('');
+    $foundWords.html('');
+
+    //timer stuff
+    secondsRemaining = 300;
+    clearInterval(timer);
+    timer = setInterval(subtractSecond, 1000);
+
     render();
     renderBoard(); // randomizer in renderBoard don't call in render
 }
@@ -78,7 +86,7 @@ function render() {
 function renderBoard() {
     letterObjects = [];
     for (i = 0; i < 16; i++) {
-        board[i] = letters[Math.floor(Math.random() * 98)]; 
+        board[i] = letters[Math.floor(Math.random() * letters.length)]; 
         // console.log(`$boardArray[${i}] --->  ${$boardArray[i]}`);
         $($boardArray[i]).text(board[i]);  // WTF?!?!?!?!!?!?
         // console.log($boardArray[i]);
@@ -89,7 +97,7 @@ function renderBoard() {
             letterValue: board[i],
             clickable: true
         });
-        console.log(letterObjects[i]);
+        // console.log(letterObjects[i]);
     }
 }
 
@@ -121,24 +129,13 @@ function clickBoard(click) {
     rowClickIdx = parseInt(clickIdx.slice(1, 2));
     colClickIdx = parseInt(clickIdx.slice(3, 4));
 
-    // letterObjects[clickIdx].clickable
-
-    // let functionBreak = true;
-    // // if target clickable is false, return
-    // letterObjects.forEach(function (letterObject) {
-    //     if (letterObject.cellIdx === clickIdx) {
-    //         console.log('This should match what I clicked: ', letterObject);
-    //         if (letterObject.clickable === false) {
-    //             console.log('false');
-    //             functionBreak = false;
-    //         }
-    //     }
-    // });
-
-    console.log(letterObjects.findIndex(letterObject => letterObject.cellIdx === clickIdx));
-    // explain this
+    // console.log(letterObjects.findIndex(letterObject => letterObject.cellIdx === clickIdx));
+    
+    // the below if: finds letterObject associated with letter that's clicked on using findIndex
+    // if that object's clickable value is false (via bang operator) abort this function
+    // this stops the user from clicking on illegal letters
     if (!letterObjects[letterObjects.findIndex(letterObject => letterObject.cellIdx === clickIdx)].clickable) return;
-    console.log('test');
+    // console.log('test');
     // good form to disable clicks before here. 
     // should be satisfactory to disable inside determineClick
     letterObjects.forEach(function(letterObject) {
@@ -146,11 +143,11 @@ function clickBoard(click) {
             usedLetters.push(letterObject);
             //push letter to word in progress here
             wordInProgress += letterObject.letterValue.toUpperCase();   //uppercase to account for 'Qu'
-            console.log('word in progress: ', wordInProgress);
+            // console.log('word in progress: ', wordInProgress);
         }
     });
 
-    console.log(usedLetters);
+    // console.log(usedLetters);
     // console.log(click.target);
     // console.log('row index: ', rowClickIdx);
     // console.log('column index: ', colClickIdx);
@@ -201,22 +198,60 @@ function addScore(word) {
 function submitWord(click) {    
     // on click if not in found words
     // submit cached word to wordCheck();
+    
+    // reset wordInProgress and usedLetters
+    usedLetters = [];
+    
+    // reset clickability
+    if (secondsRemaining > 0) {
+        letterObjects.forEach(function(letterObject) {
+            letterObject.clickable = true;
+        });
+    }
+    
+    
     if (foundWords.includes(wordInProgress)) {
         // to avoid copies of a word and its effects on score
+        $message.text('Already found that one!');
+        wordInProgress = '';
         return;
     } else {
         wordCheck(wordInProgress);  // need to call function to return insult/accolade  
         if (wordCheck(wordInProgress)) {
             foundWords.push(wordInProgress);    // if word is valid, add to foundWords
+            $foundWords.append(`<li>${wordInProgress}</li>`);
+            //best place to display found words.
+            
         }
+        wordInProgress = '';
     }
 
-    // reset wordInProgress
-    wordInProgress = '';
 
-    // reset clickability
+    // console.log(letterObjects);
     
 }
+
+function subtractSecond() {
+    secondsRemaining--;
+    if (secondsRemaining > 0) {
+        $timer.text(`Time remaining: ${timeFormat()}`);
+    } else {
+        $timer.text('Time remaining: 00:00');
+        clearInterval(timer);
+        $message.text("Time's up!");
+        letterObjects.forEach(function(letterObject) {
+            letterObject.clickable = false;
+        });
+        //gameOver(); here if implemented
+    }
+}
+
+function timeFormat() {
+    const displayMins = Math.floor(secondsRemaining / 60).toString().padStart(1, '0');
+    const displaySecs = (secondsRemaining % 60).toString().padStart(2, '0');
+    return `${displayMins}:${displaySecs}`;
+}
+
 
 // counts down from set time limit
 // function countDown() {
