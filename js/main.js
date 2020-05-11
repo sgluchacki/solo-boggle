@@ -9,11 +9,13 @@ const accolades = ['Another one.', 'Nailed it.', 'Nice!', 'Great!', 'Next stop: 
 // state variables
 let board;
 let score;
-let foundWords;  //to avoid using the same word for more than one play
-let usedLetters; // changes after every click during a turn
+let foundWords;         //to avoid using the same word for more than one play
+let usedLetters;        // changes after every click during a turn
 let timer;
-let wordInProgress; // word that is being built by clicks
-
+let wordInProgress;     // word that is being built by clicks
+let letterObjects;      // contains objects representing the letters and their location on the board
+let colClickIdx;
+let rowClickIdx;
 
 // cached element references
 
@@ -47,8 +49,8 @@ function init() {
             null, null, null, null,
             null, null, null, null];
     //initiate timer maybe 5 minutes?
-    foundWords = [];
-    usedLetters = {};       // dear past me, why did you make this an object?
+    foundWords = [];        // hey, so, ummm we need a dictionary with more plurals, right?
+    usedLetters = [];       // dear past me, why did you make this an object?
                             // key= divId to account for multiple occurences of a letter        
                             // object of objects? How best to record clickable/unclickable?
                             // letter value, clickable, 
@@ -70,10 +72,19 @@ function render() {
 } 
 
 function renderBoard() {
+    letterObjects = [];
     for (i = 0; i < 16; i++) {
         board[i] = letters[Math.floor(Math.random() * 98)]; 
         // console.log(`$boardArray[${i}] --->  ${$boardArray[i]}`);
         $($boardArray[i]).text(board[i]);  // WTF?!?!?!?!!?!?
+        // console.log($boardArray[i]);
+        letterObjects.push({
+            rowIdx: parseInt($($boardArray[i]).attr('id').slice(1,2)),
+            colIdx: parseInt($($boardArray[i]).attr('id').slice(3,4)),
+            letterValue: board[i],
+            clickable: true
+        });
+        // console.log(letterObjects[i]);
     }
 }
 
@@ -101,18 +112,41 @@ function clickBoard(click) {
     // need to render word in progress. probably do here 
     // push clicked letters to, umm i guess, usedLetters object
     const clickIdx = $(click.target).attr('id'); // pull from click event
-    const rowIdx = clickIdx.slice(1, 2);
-    const colIdx = clickIdx.slice(3, 4);
-    console.log(click.target);
-    console.log('row index: ', rowIdx);
-    console.log('column index: ', colIdx);
+    rowClickIdx = parseInt(clickIdx.slice(1, 2));
+    colClickIdx = parseInt(clickIdx.slice(3, 4));
+
+
+    // good form to disable clicks before here. 
+    // should be satisfactory to disable inside determineClick
+    letterObjects.forEach(function(letterObject) {
+        if (letterObject.rowIdx === rowClickIdx && letterObject.colIdx === colClickIdx) {
+            usedLetters.push(letterObject);
+        }
+    });
+
+    console.log(usedLetters);
+    // console.log(click.target);
+    // console.log('row index: ', rowClickIdx);
+    // console.log('column index: ', colClickIdx);
     determineClickable();
 } 
 
 function determineClickable() {
+    // console.log(typeof(rowClickIdx));
     // use id from click
     // clickable is +/- 1 in both indices setminus clicked letters
     // change shade of background for clickable and unclickable?
+    letterObjects.forEach(function(letterObject) {
+        if (Math.abs(letterObject.rowIdx - rowClickIdx) > 1 || Math.abs(letterObject.colIdx - colClickIdx) > 1) {
+            letterObject.clickable = false;
+        } else {
+            letterObject.clickable = true;
+        }
+        if (usedLetters.includes(letterObject)) {
+            letterObject.clickable = false;
+        }
+        console.log(letterObject);
+    });
 }
 
 // when words are found and valid, adds to score based on word length. Establish score based on length of word in the dictionary to account for the Qu tile
