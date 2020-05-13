@@ -59,7 +59,12 @@ function init() {
 
 function render() {
     $score.text(`Score: ${score}`);
-    $currentWord.text(`${wordInProgress}`)
+    $currentWord.text(`${wordInProgress}`);
+    // letterObjects.forEach(function(letterObject) {
+    //     if (!letterObject.clickable) {
+    //         $(letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
+    //     }
+    // });
 } 
 
 function renderBoard() {

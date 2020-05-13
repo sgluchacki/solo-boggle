@@ -17,7 +17,7 @@ h1 {
     width: 12vmin;
     height: 12vmin;
     gap: 0vmin;
-    border: 2px solid gray;
+    border: 2px solid rgb(50, 50, 50);
     line-height: 12vmin;
     text-align: center;
     vertical-align: center;
