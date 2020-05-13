@@ -45,7 +45,7 @@ function init() {
             null, null, null, null,
             null, null, null, null,
             null, null, null, null];
-    foundWords = [];        // hey, so, ummm we need a dictionary with more plurals, right?
+    foundWords = [];        
     usedLetters = [];       
     wordInProgress = '';
     $message.text('');
@@ -53,18 +53,22 @@ function init() {
     secondsRemaining = 300;
     clearInterval(timer);
     timer = setInterval(subtractSecond, 1000);
-    render();
     renderBoard(); // randomizer in renderBoard so can't call in render
+    render();
 }
 
 function render() {
     $score.text(`Score: ${score}`);
     $currentWord.text(`${wordInProgress}`);
-    // letterObjects.forEach(function(letterObject) {
-    //     if (!letterObject.clickable) {
-    //         $(letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
-    //     }
-    // });
+    letterObjects.forEach(function(letterObject) {
+        // if (!letterObject.clickable) {
+        //     console.log(letterObject.clickable);
+        //     console.log(typeof(letterObject.cellIdx));
+
+        //     // console.log($('#' + letterObject.cellIdx).css('background-color'));
+        //     // $('#' + letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
+        // }
+    });
 } 
 
 function renderBoard() {
@@ -79,6 +83,7 @@ function renderBoard() {
             letterValue: board[i],
             clickable: true
         });
+        $('#' + letterObjects[i].cellIdx).css("background-color", "rgb(255, 255, 255)");
     }
 }
 
@@ -117,6 +122,18 @@ function clickBoard(click) {
             wordInProgress += letterObject.letterValue.toUpperCase();   //uppercase to account for 'Qu'
         }
     });
+
+    // letterObjects.forEach(function(letterObject) {
+    //     if (!letterObject.clickable) {
+    //         // console.log(letterObject.clickable);
+    //         // console.log(typeof(letterObject.cellIdx));
+
+    //         // console.log($('#' + letterObject.cellIdx).css('background-color'));
+    //         $('#' + letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
+    //     } else {
+    //         $('#' + letterObject.cellIdx).css("background-color", "rgb(255, 255, 255)");
+    //     }
+    // });
 
     determineClickable();
     render();   // to display wordInProgress
@@ -176,7 +193,10 @@ function submitWord(click) {
         wordInProgress = '';
     }
     
-    $currentWord.text('');    
+    $currentWord.text('');
+    // letterObjects.forEach(function(letterObject) {
+    //     $('#' + letterObject.cellIdx).css("background-color", "rgb(0, 0, 0)"); 
+    // }   
 }
 
 function subtractSecond() {
