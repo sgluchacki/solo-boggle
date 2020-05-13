@@ -9,12 +9,12 @@ const accolades = ['Another one.', 'Nailed it.', 'Nice!', 'Great!', 'Next stop: 
 // state variables
 let board;
 let score;
-let foundWords;         //to avoid using the same word for more than one play
-let usedLetters;        // changes after every click during a turn
+let foundWords;         
+let usedLetters;        
 let timer;
 let secondsRemaining;
-let wordInProgress;     // word that is being built by clicks
-let letterObjects;      // contains objects representing the letters and their location on the board
+let wordInProgress;     
+let letterObjects;      
 let colClickIdx;
 let rowClickIdx;
 
@@ -82,11 +82,16 @@ function wordCheck(word) {
         return validWord === word.toLowerCase();
     });
     if (isWordValid) {
-        foundWords.push(word);
-        addScore(word);
-        $message.text(accolades[Math.floor(Math.random() * accolades.length)]);       // make an array of different message options
+        if (word.length > 2) {
+            foundWords.push(word);
+            addScore(word);
+            $message.text(accolades[Math.floor(Math.random() * accolades.length)]);       
+        } else {
+            $message.text("That's too short of a word – you should know better.");
+            isWordValid = false;
+        }
     } else {
-        $message.text(insults[Math.floor(Math.random() * insults.length)])   // same here, Math.random it
+        $message.text(insults[Math.floor(Math.random() * insults.length)]); 
     }
     return isWordValid;     
 } 

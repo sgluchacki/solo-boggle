@@ -17,7 +17,6 @@ Once you start the game, you will have (maybe) 5 minutes to search for words. To
 Please note that the Qu tile counts as two letters.
 
 ## Screenshot(s)
-
 I'll put some screenshots here. I just have to, ummm...., build it first. In the meanwhile, here's the wireframe!
 
 <img src="images/wireframe.png">
