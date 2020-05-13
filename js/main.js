@@ -19,15 +19,15 @@ let colClickIdx;
 let rowClickIdx;
 
 // cached element references
-$boardArray = [...$('#board > .letters')];  // each div on the board 
+let $boardArray = [...$('#board > .letters')];  // each div on the board 
                                             // below injected into letterObjects, upon init
-$currentWord = $('#current-word');
-$message = $('#message'); 
-$submitButton = $('#submit'); 
-$replayButton = $('#replay'); 
-$score = $('#score'); 
-$foundWords = $('#found-words'); 
-$timer = $('#timer'); 
+let $currentWord = $('#current-word');
+let $message = $('#message'); 
+let $submitButton = $('#submit'); 
+let $replayButton = $('#replay'); 
+let $score = $('#score'); 
+let $foundWords = $('#found-words'); 
+let $timer = $('#timer'); 
 
 
 // event listeners
@@ -61,13 +61,11 @@ function render() {
     $score.text(`Score: ${score}`);
     $currentWord.text(`${wordInProgress}`);
     letterObjects.forEach(function(letterObject) {
-        // if (!letterObject.clickable) {
-        //     console.log(letterObject.clickable);
-        //     console.log(typeof(letterObject.cellIdx));
-
-        //     // console.log($('#' + letterObject.cellIdx).css('background-color'));
-        //     // $('#' + letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
-        // }
+        if (!letterObject.clickable) {
+            $('#' + letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
+        } else {
+            $('#' + letterObject.cellIdx).css("background-color", "rgb(255, 255, 255)");
+        }
     });
 } 
 
@@ -167,7 +165,7 @@ function addScore(word) {
     } else {
         score += 11
     }
-    render();
+    // render();
 }
 
 function submitWord(click) {    
@@ -182,21 +180,17 @@ function submitWord(click) {
     
     if (foundWords.includes(wordInProgress)) {
         $message.text('Already found that one!');
-        wordInProgress = '';
-        return;
     } else {
         wordCheck(wordInProgress);      // need to call function to return insult/accolade  
         if (wordCheck(wordInProgress)) {
             foundWords.push(wordInProgress);    
             $foundWords.prepend(`<li>${wordInProgress}</li>`);   
         }
-        wordInProgress = '';
     }
     
+    wordInProgress = '';
     $currentWord.text('');
-    // letterObjects.forEach(function(letterObject) {
-    //     $('#' + letterObject.cellIdx).css("background-color", "rgb(0, 0, 0)"); 
-    // }   
+    render();
 }
 
 function subtractSecond() {
