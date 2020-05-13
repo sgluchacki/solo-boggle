@@ -61,10 +61,22 @@ function render() {
     $score.text(`Score: ${score}`);
     $currentWord.text(`${wordInProgress}`);
     letterObjects.forEach(function(letterObject) {
-        if (!letterObject.clickable) {
+        if (letterObject.clickable === false) {
             $('#' + letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
-        } else {
+            $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
+        } else if (letterObject.clickable === true) {
             $('#' + letterObject.cellIdx).css("background-color", "rgb(255, 255, 255)");
+            $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
+        } else if (letterObject.clickable === 0) {  // Use value of 0 here to mesh with line 128
+            $('#' + letterObject.cellIdx).css("background-color", "rgb(67, 159, 231)");
+            $('#' + letterObject.cellIdx).css("color", "rgb(255, 255, 255)");
+            //stuff about color here
+            //stuff about color here
+            //stuff about color here
+            //stuff about color here
+            //stuff about color here
+            //stuff about color here
+            //stuff about color here
         }
     });
 } 
@@ -82,6 +94,7 @@ function renderBoard() {
             clickable: true
         });
         $('#' + letterObjects[i].cellIdx).css("background-color", "rgb(255, 255, 255)");
+        $('#' + letterObjects[i].cellIdx).css("color", "rgb(0, 0, 0)");
     }
 }
 
@@ -121,24 +134,11 @@ function clickBoard(click) {
         }
     });
 
-    // letterObjects.forEach(function(letterObject) {
-    //     if (!letterObject.clickable) {
-    //         // console.log(letterObject.clickable);
-    //         // console.log(typeof(letterObject.cellIdx));
-
-    //         // console.log($('#' + letterObject.cellIdx).css('background-color'));
-    //         $('#' + letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
-    //     } else {
-    //         $('#' + letterObject.cellIdx).css("background-color", "rgb(255, 255, 255)");
-    //     }
-    // });
-
     determineClickable();
     render();   // to display wordInProgress
 } 
 
 function determineClickable() {
-    // change shade of background for clickable and unclickable?
     letterObjects.forEach(function(letterObject) {
         if (Math.abs(letterObject.rowIdx - rowClickIdx) > 1 || Math.abs(letterObject.colIdx - colClickIdx) > 1) {
             letterObject.clickable = false;
@@ -146,7 +146,7 @@ function determineClickable() {
             letterObject.clickable = true;
         }
         if (usedLetters.includes(letterObject)) {
-            letterObject.clickable = false;
+            letterObject.clickable = 0;     // Use value of 0 here to mesh with line 128
         }
     });
 }
