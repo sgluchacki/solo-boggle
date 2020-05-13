@@ -24,7 +24,11 @@ I'll put some screenshots here. I just have to, ummm...., build it first. In the
 
 ## Technologies Used
 
-This project was constructed using HTML, CSS, JavaScript with jQuery, and maybe a little PhotoShop magic. Dictionary comes courtesy of GitHub user benhoyt: https://github.com/benhoyt/boggle/blob/master/word-list.txt
+This project was constructed using HTML, CSS, JavaScript with jQuery, and maybe a little PhotoShop magic. 
+
+Dictionary comes courtesy of GitHub user dwyl: https://github.com/dwyl/english-words
+
+Dictionary comes courtesy of GitHub user benhoyt: https://github.com/benhoyt/boggle/blob/master/word-list.txt
 
 ## Getting Started
 
