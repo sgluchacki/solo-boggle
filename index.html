@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mind-Boggling Word Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Permanent+Marker&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="js/dictionary.js"></script>
     <script defer src="js/main.js"></script>
 </head>
 <body>
-    <h1>Welcome to the Amazing 1-Player Mind-Boggling Word Search Experience!!!</h1>
-    <!-- <main> -->
+    <h1>Welcome to the<br><span id="boggling">Amazing 1-Player Mind-Boggling</span><br>Word Search Experience!!!</h1>
+    <main>
         <section id="board">
             <div class="letters" id="r0c0"></div>
             <div class="letters" id="r0c1"></div>
@@ -30,21 +31,21 @@
             <div class="letters" id="r3c2"></div>
             <div class="letters" id="r3c3"></div>
         </section>
+        <button id="submit">Submit Word</button>
+        <div id="current-word"></div>
+    </main>
         
         <div id="sidebar">
             <h3 id="timer"></h3>
             <h3 id="score"></h3>
-            <ul id="found-words">why won't this display????</ul>
+            <ul id="found-words"></ul>
         </div>
         
         <div id="data-display">
-            <button id="submit">Submit Word</button>
-            <div id="current-word"></div>
             <h2 id="message"></h2>
             <button id="replay">Start Over</button>
         </div>
 
 
-    <!-- </main> -->
 </body>
 </html>

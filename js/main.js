@@ -7,16 +7,8 @@ const accolades = ['Another one.', 'Nailed it.', 'Nice!', 'Great!', 'Next stop: 
 
 
 // state variables
-let board;
-let score;
-let foundWords;         
-let usedLetters;        
-let timer;
-let secondsRemaining;
-let wordInProgress;     
-let letterObjects;      
-let colClickIdx;
-let rowClickIdx;
+let board, score, foundWords, usedLetters, timer, secondsRemaining, 
+    wordInProgress, letterObjects, colClickIdx, rowClickIdx, highScore;
 
 // cached element references
 let $boardArray = [...$('#board > .letters')];  // each div on the board 
@@ -61,15 +53,16 @@ function render() {
     $score.text(`Score: ${score}`);
     $currentWord.text(`${wordInProgress}`);
     letterObjects.forEach(function(letterObject) {
-        if (letterObject.clickable === false) {
-            $('#' + letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
-            $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
-        } else if (letterObject.clickable === true) {
-            $('#' + letterObject.cellIdx).css("background-color", "rgb(255, 255, 255)");
-            $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
-        } else if (letterObject.clickable === 0) {  // Use value of 0 here to mesh with line 121
+        // if (letterObject.clickable === false || letterObject.clickable === true) {
+        //     $('#' + letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
+        //     $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
+        // } else 
+        if (letterObject.clickable === true || letterObject.clickable === false ) {
             $('#' + letterObject.cellIdx).css("background-color", "rgb(67, 159, 231)");
             $('#' + letterObject.cellIdx).css("color", "rgb(255, 255, 255)");
+        } else if (letterObject.clickable === 0) {  // Use value of 0 here to mesh with line 121
+            $('#' + letterObject.cellIdx).css("background-color", "rgb(255, 255, 255)");
+            $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
         }
     });
 } 
@@ -176,7 +169,7 @@ function submitWord(click) {
         wordCheck(wordInProgress);      // need to call function to return insult/accolade  
         if (wordCheck(wordInProgress)) {
             foundWords.push(wordInProgress);    
-            $foundWords.prepend(`<li>${wordInProgress}</li>`);   
+            $foundWords.append(`<li>${wordInProgress}</li>`);   
         }
     }
     
