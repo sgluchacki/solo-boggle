@@ -41,12 +41,11 @@ ul {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    height: 43vmin;
+    height: 39vmin;
 }
 
 li {
     list-style: none;
-    /* probably put this in a flex box with wrap */
 }
 
 main {
@@ -100,6 +99,17 @@ main {
 }
 
 #score {
+    background-color: rgb(67, 159, 231);
+    font-family: 'Luckiest Guy', cursive;
+    color: white;
+    border-radius: 1vmin;
+    font-size: 3.6vmin;
+    padding: 2vmin 1vmin 1vmin;
+    text-align: center;
+    margin: 1vmin;
+}
+
+#high-score {
     background-color: rgb(67, 159, 231);
     font-family: 'Luckiest Guy', cursive;
     color: white;
@@ -200,7 +210,6 @@ main {
         display: grid;
         grid-template-columns: repeat(4, 22vmin);
         grid-template-rows: repeat(4, 22vmin);
-        gap: 0vmin; 
     }
     
     .letters {
@@ -238,7 +247,7 @@ main {
         padding: 1vmin;       
     }
     
-    #timer, #score, #replay{
+    #timer, #score, #replay, #high-score {
         width: 88vmin;
         height: 12vmin;
         padding-top: 4vmin;
@@ -253,7 +262,7 @@ main {
     #message {
         font-size: 5vmin;
         margin: 6px;
-        height: 20vmin;
+        height: auto;
     }
 
     ul {
@@ -261,6 +270,4 @@ main {
         padding-bottom: 0;
         margin-bottom: 0;
     }
-
-
 }

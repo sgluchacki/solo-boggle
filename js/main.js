@@ -10,6 +10,14 @@ const accolades = ['Another one.', 'Nailed it.', 'Nice!', 'Great!', 'Next stop: 
 let board, score, foundWords, usedLetters, timer, secondsRemaining, 
     wordInProgress, letterObjects, colClickIdx, rowClickIdx, highScore;
 
+
+// local storage access
+if (localStorage.getItem('yourHighScore')) {
+    highScore = parseInt(localStorage.getItem('yourHighScore'));
+} else {
+    highScore = 0;
+}
+
 // cached element references
 let $boardArray = [...$('#board > .letters')];  // each div on the board 
                                                 // below injected into letterObjects, upon init
@@ -20,6 +28,7 @@ let $replayButton = $('#replay');
 let $score = $('#score'); 
 let $foundWords = $('#found-words'); 
 let $timer = $('#timer'); 
+let $highScore = $('#high-score');
 
 
 // event listeners
@@ -51,6 +60,7 @@ function init() {
 
 function render() {
     $score.text(`Score: ${score}`);
+    $highScore.text(`highScore: ${highScore}`);
     $currentWord.text(`${wordInProgress}`);
     letterObjects.forEach(function(letterObject) {
         if (letterObject.clickable === true || letterObject.clickable === false ) {
@@ -179,14 +189,19 @@ function subtractSecond() {
     if (secondsRemaining > 0) {
         $timer.html(`Time remaining: ${timeFormat()}`);
     } else {
-        $timer.html('Time remaining: 00:00');
+        $timer.html('Time remaining: 0:00');
         clearInterval(timer);
         $message.text("Time's up!");
         letterObjects.forEach(function(letterObject) {
             letterObject.clickable = false;
         });
-        //gameOver(); here if implemented
+        if (score > highScore) {
+            $message.text("You've set a new high score!");
+            highScore = score;
+            localStorage.setItem('yourHighScore', highScore);
+        }
     }
+    render();   // in case of new high score
 }
 
 function timeFormat() {
@@ -195,8 +210,6 @@ function timeFormat() {
     return `${displayMins}:${displaySecs}`;
 }
 
-// upon timer end ends board click event, reveals final score, and displays replay button
-function gameOver() {} 
 
 
 // challenges
@@ -214,3 +227,6 @@ function gameOver() {}
 // maybe even allow for tournaments with winners and losers brackets
 // organize insults and accolades based on circumstance
 // e.g. three in a row -> 'you're on fire' a la NBA Jam
+// original music coming soon!
+// move messages up to a more visible location in browser
+// repair header in mobile version
