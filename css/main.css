@@ -55,9 +55,9 @@ main {
     background-color: white;
     padding: 1.5vmin;
     border-radius: 1vmin;
-    /* display: flex;
+    display: flex;
     flex-direction: column;
-    align-items: center; */
+    align-items: center;
 }
 
 #board {
@@ -179,7 +179,7 @@ main {
 @media only screen and (max-width: 768px) {
     body {
       grid-template-columns: 1fr;
-      grid-template-rows: 50px auto auto 30px;
+      grid-template-rows: auto auto auto auto;
       grid-template-areas: 
         "hdr"
         "brd" 
