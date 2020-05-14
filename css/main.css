@@ -3,14 +3,36 @@
 }
 
 h1 {
+    grid-area: hdr;
     text-align: center;
+    
+}
+
+body {
+    display: grid;
+    height: 100vh;
+    margin: 0;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 130px 1fr 1fr;
+    grid-template-areas:
+        "hdr hdr"
+        "brd sid"
+        "dtd dtd";
+    background-color: rgb(250, 201, 144);
+    font-family: 'helvetica', sans-serif;
+}
+
+li {
+    list-style: none;
 }
 
 #board {
+    grid-area: brd;
     display: grid;
     grid-template-columns: repeat(4, 12vmin);
     grid-template-rows: repeat(4, 12vmin);
-    gap: 0vmin;   
+    gap: 0vmin; 
+    margin: 0 20px;
 }
 
 .letters {
@@ -18,12 +40,70 @@ h1 {
     height: 12vmin;
     gap: 0vmin;
     border: 2px solid rgb(50, 50, 50);
+    border-radius: 7%;
     line-height: 12vmin;
     text-align: center;
     vertical-align: center;
     font-size: 8vmin;
+    font-weight: 500;
 }
 
 #replay {
     visibility: visible;
+}
+
+#sidebar {
+    grid-area: sid;
+}
+
+#data-display {
+    grid-area: dtd;
+    margin: 0 20px;
+    
+}
+
+#submit {
+    width: 48vmin;
+    height: 6vmin;
+    border: solid gb(67, 159, 231);
+    background-color: rgb(67, 159, 231);
+    color: white;
+    border-radius: 0.8vmin;
+    margin-top: 8px;
+    font-size: 3.7vmin;
+    text-align: center;
+    font-family: 'helvetica', sans-serif;
+}
+
+#replay {
+    width: 24vmin;
+    height: 6vmin;
+    border: solid gb(67, 159, 231);
+    background-color: rgb(67, 159, 231);
+    color: white;
+    border-radius: 0.8vmin;
+    margin-top: 80px;
+    font-size: 3.7vmin;
+    text-align: center;
+    font-family: 'helvetica', sans-serif;
+}
+
+#current-word {
+    font-size: 6vmin;
+    font-weight: 500;
+    height: 8vmin;
+    width: 48vmin;
+    text-align: center;
+    margin-top: 8px;
+    background-color: white;
+    color: rgb(67, 159, 231);
+    border-radius: 0.8vmin;
+}
+
+#message {
+    font-size: 5vmin;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 8px;
+    height: 7vmin;
 }
