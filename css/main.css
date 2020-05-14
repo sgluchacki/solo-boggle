@@ -107,3 +107,16 @@ li {
     margin-top: 8px;
     height: 7vmin;
 }
+
+
+/* @media only screen and (min-width: 768px) {
+    body { */
+      /* tablet - two column display */
+      /* grid-template-columns: 1fr 4fr;
+      grid-template-rows: 50px auto 30px;
+      grid-template-areas: 
+        "hdr hdr"
+        "side content"
+        "ftr ftr";
+    }
+  } */

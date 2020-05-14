@@ -218,3 +218,8 @@ function gameOver() {}
 // maybe making a local score board
 // maybe pause the submit listener on game over
 // keyboard word entry
+// multiplayer after the development of a backend
+// will be set up based on an id and a number of players (maybe with ids)
+// each player plays at their leisure, after each player finishes everybody 
+// receives a notification of the final rankings
+// maybe even allow for tournaments with winners and losers brackets
