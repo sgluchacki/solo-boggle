@@ -10,8 +10,8 @@
     <script defer src="js/main.js"></script>
 </head>
 <body>
-    <h1>Welcome to the Amazing 1-Player Mind-Boggling Word Search Experience!!</h1>
-    <main>
+    <h1>Welcome to the Amazing 1-Player Mind-Boggling Word Search Experience!!!</h1>
+    <!-- <main> -->
         <section id="board">
             <div class="letters" id="r0c0"></div>
             <div class="letters" id="r0c1"></div>
@@ -30,22 +30,21 @@
             <div class="letters" id="r3c2"></div>
             <div class="letters" id="r3c3"></div>
         </section>
-
+        
         <div id="sidebar">
-            <div id="current-word"></div>
+            <h3 id="timer"></h3>
+            <h3 id="score"></h3>
+            <ul id="found-words">why won't this display????</ul>
+        </div>
+        
+        <div id="data-display">
             <button id="submit">Submit Word</button>
+            <div id="current-word"></div>
+            <h2 id="message"></h2>
             <button id="replay">Start Over</button>
         </div>
 
-        <div id="data-display">
-            <h2 id="message"></h2>
-            <h3 id="timer"></h3>
-            <h3 id="score"></h3>
-            <ul id="found-words"></ul>
 
-        </div>
-
-
-    </main>
+    <!-- </main> -->
 </body>
 </html>

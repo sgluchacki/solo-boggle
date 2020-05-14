@@ -20,7 +20,7 @@ let rowClickIdx;
 
 // cached element references
 let $boardArray = [...$('#board > .letters')];  // each div on the board 
-                                            // below injected into letterObjects, upon init
+                                                // below injected into letterObjects, upon init
 let $currentWord = $('#current-word');
 let $message = $('#message'); 
 let $submitButton = $('#submit'); 
@@ -50,7 +50,7 @@ function init() {
     wordInProgress = '';
     $message.text('');
     $foundWords.html('');
-    secondsRemaining = 300;
+    secondsRemaining = 180;
     clearInterval(timer);
     timer = setInterval(subtractSecond, 1000);
     renderBoard(); // randomizer in renderBoard so can't call in render
@@ -67,16 +67,9 @@ function render() {
         } else if (letterObject.clickable === true) {
             $('#' + letterObject.cellIdx).css("background-color", "rgb(255, 255, 255)");
             $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
-        } else if (letterObject.clickable === 0) {  // Use value of 0 here to mesh with line 128
+        } else if (letterObject.clickable === 0) {  // Use value of 0 here to mesh with line 121
             $('#' + letterObject.cellIdx).css("background-color", "rgb(67, 159, 231)");
             $('#' + letterObject.cellIdx).css("color", "rgb(255, 255, 255)");
-            //stuff about color here
-            //stuff about color here
-            //stuff about color here
-            //stuff about color here
-            //stuff about color here
-            //stuff about color here
-            //stuff about color here
         }
     });
 } 
@@ -146,7 +139,7 @@ function determineClickable() {
             letterObject.clickable = true;
         }
         if (usedLetters.includes(letterObject)) {
-            letterObject.clickable = 0;     // Use value of 0 here to mesh with line 128
+            letterObject.clickable = 0;     // Use value of 0 here to mesh with line 121
         }
     });
 }
@@ -165,7 +158,6 @@ function addScore(word) {
     } else {
         score += 11
     }
-    // render();
 }
 
 function submitWord(click) {    
