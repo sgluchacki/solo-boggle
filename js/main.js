@@ -53,14 +53,10 @@ function render() {
     $score.text(`Score: ${score}`);
     $currentWord.text(`${wordInProgress}`);
     letterObjects.forEach(function(letterObject) {
-        // if (letterObject.clickable === false || letterObject.clickable === true) {
-        //     $('#' + letterObject.cellIdx).css("background-color", "rgb(200, 200, 200)");
-        //     $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
-        // } else 
         if (letterObject.clickable === true || letterObject.clickable === false ) {
             $('#' + letterObject.cellIdx).css("background-color", "rgb(67, 159, 231)");
             $('#' + letterObject.cellIdx).css("color", "rgb(255, 255, 255)");
-        } else if (letterObject.clickable === 0) {  // Use value of 0 here to mesh with line 121
+        } else if (letterObject.clickable === 0) {  // Use value of 0 here to mesh with line 110
             $('#' + letterObject.cellIdx).css("background-color", "rgb(255, 255, 255)");
             $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
         }
@@ -132,7 +128,7 @@ function determineClickable() {
             letterObject.clickable = true;
         }
         if (usedLetters.includes(letterObject)) {
-            letterObject.clickable = 0;     // Use value of 0 here to mesh with line 121
+            letterObject.clickable = 0;     // Use value of 0 here to mesh with line 110
         }
     });
 }
@@ -181,9 +177,9 @@ function submitWord(click) {
 function subtractSecond() {
     secondsRemaining--;
     if (secondsRemaining > 0) {
-        $timer.text(`Time remaining: ${timeFormat()}`);
+        $timer.html(`Time remaining: ${timeFormat()}`);
     } else {
-        $timer.text('Time remaining: 00:00');
+        $timer.html('Time remaining: 00:00');
         clearInterval(timer);
         $message.text("Time's up!");
         letterObjects.forEach(function(letterObject) {
@@ -216,3 +212,5 @@ function gameOver() {}
 // each player plays at their leisure, after each player finishes everybody 
 // receives a notification of the final rankings
 // maybe even allow for tournaments with winners and losers brackets
+// organize insults and accolades based on circumstance
+// e.g. three in a row -> 'you're on fire' a la NBA Jam

@@ -10,12 +10,17 @@ h1 {
     color: white;
 }
 
-#boggling {
+.boggling {
     font-family: 'Permanent Marker', cursive;
     color: black;
     margin: 0;
     display: inline-block;
     padding: 0;
+    margin-top: -10vmin;
+}
+
+#display-small {
+    display: none;
 }
 
 body {
@@ -23,13 +28,20 @@ body {
     height: 100vh;
     margin: 0;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 22vmin 1fr 1fr;
+    grid-template-rows: 20vmin 1fr 1fr;
     grid-template-areas:
         "hdr hdr"
         "brd sid"
         "dtd dtd";
     background-color: rgb(246, 139, 59);
     font-family: 'helvetica', sans-serif;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 43vmin;
 }
 
 li {
@@ -43,6 +55,9 @@ main {
     background-color: white;
     padding: 1.5vmin;
     border-radius: 1vmin;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
 }
 
 #board {
@@ -69,7 +84,7 @@ main {
     grid-area: sid;
     background-color: white;
     margin-right: 20px;
-    padding: 1.5vmin;
+    padding: 1vmin;
     border-radius: 1vmin;
 }
 
@@ -152,23 +167,100 @@ main {
 
 #message {
     font-family: 'Permanent Marker', cursive;
-    font-size: 3.5vmin;
+    font-size: 3.2vmin;
     font-weight: 400;
     margin: 0;
     margin-top: 8px;
-    height: 7vmin;
+    height: 6.4vmin;
     text-align: center;
 }
 
 
-/* @media only screen and (min-width: 768px) {
-    body { */
-      /* tablet - two column display */
-      /* grid-template-columns: 1fr 4fr;
-      grid-template-rows: 50px auto 30px;
+@media only screen and (max-width: 768px) {
+    body {
+      grid-template-columns: 1fr;
+      grid-template-rows: 50px auto auto 30px;
       grid-template-areas: 
-        "hdr hdr"
-        "side content"
-        "ftr ftr";
+        "hdr"
+        "brd" 
+        "sid"
+        "dtd";
     }
-  } */
+
+    #display-large {
+        display: none;
+    }
+
+    #display-small {
+        display: inline-block;
+        font-size: 6.4vmin;
+    }
+
+    #board {
+        display: grid;
+        grid-template-columns: repeat(4, 22vmin);
+        grid-template-rows: repeat(4, 22vmin);
+        gap: 0vmin; 
+    }
+    
+    .letters {
+        width: 22vmin;
+        height: 22vmin;
+        gap: 0vmin;
+        border: 2px solid rgb(50, 50, 50);
+        border-radius: 7%;
+        line-height: 22vmin;
+        text-align: center;
+        vertical-align: center;
+        font-size: 14vmin;
+        font-weight: 500;
+    }
+
+    #submit {
+        width: 88vmin;
+        height: 12vmin;
+        border-radius: 0.8vmin;
+        margin-top: 12px;
+        padding-top: 3vmin;
+        font-size: 7vmin;
+    }
+    
+    #current-word {
+        font-size: 8vmin;
+        height: 12vmin;
+        width: 88vmin;
+        margin-top: 12px;
+    }
+    
+    #sidebar {
+        margin:  20px;
+        margin-bottom: 6px;
+        padding: 1vmin;       
+    }
+    
+    #timer, #score, #replay{
+        width: 88vmin;
+        height: 12vmin;
+        padding-top: 4vmin;
+        font-size: 7vmin;  
+        margin: 6px; 
+    }
+
+    #replay {
+        margin-bottom: 20px;
+    }
+
+    #message {
+        font-size: 5vmin;
+        margin: 6px;
+        height: 20vmin;
+    }
+
+    ul {
+        height: 49vmin;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+
+}
