@@ -1,15 +1,11 @@
 // constants
-// Letter distribution via the distribution of tiles in Scrabble
-// Casing as listed for display convenience
 const letters = ['A','A','A','A','A','A','A','A','A','B','B','C','C','D','D','D','D','E','E','E','E','E','E','E','E','E','E','E','E','F','F','G','G','G','H','H','I','I','I','I','I','I','I','I','I','J','K','L','L','L','L','M','M','N','N','N','N','N','N','O','O','O','O','O','O','O','O','P','P','Qu','R','R','R','R','R','R','S','S','S','S','T','T','T','T','T','T','U','U','U','U','V','V','W','W','X','Y','Y','Z']
 const insults = ['Dats nat e werd.', "That's not a word, silly!", 'Seriously? No.', 'Are you even trying?', 'Why do you even bother?', 'Ughh...', 'But ... I mean ... How? ... No.', 'Try again.', 'Remember Hooked on Phonics? Look into it.', 'Questionable at best.', 'Practice makes perfect! Keep trying.', 'Consider resetting the board.', 'No.', 'No, no, and no.', 'Umm... No.', 'Your skill never ceases to underwhelm me.', 'If I throw a stick, will you leave?', 'Your inferiority complex is fully justified.', 'Do you have delusions of adequacy?', 'I like the way you try.', "I like your approach. Now let's see your departure.", 'You fool!'];
 const accolades = ['Another one.', 'Nailed it.', 'Nice!', 'Great!', 'Next stop: Scripps Spelling Bee!', 'Genius!', 'Impressive.', 'Are you Will Shortz?', 'Nigel Richards? Is that you?', "You're on fire!", 'Keep up the good work!', 'Yippee ki-yay!', "You're a gift to those around you.", 'You are one smart cookie!', 'Inspiring!', "You're a candle in the dark.", 'Awesome!', 'Crushing it!', "Are you cheating? I feel like you're cheating.", "Is 'on fleek' still a thing? If it is you're totally on fleek.", "Yes!", 'Yes, yes, and yes!', "Where's the applause emoji?", "You're such a nerd; like, in a good way."];
 
-
 // state variables
 let board, score, foundWords, usedLetters, timer, secondsRemaining, 
     wordInProgress, letterObjects, colClickIdx, rowClickIdx, highScore;
-
 
 // local storage access
 if (localStorage.getItem('yourHighScore')) {
@@ -19,8 +15,7 @@ if (localStorage.getItem('yourHighScore')) {
 }
 
 // cached element references
-let $boardArray = [...$('#board > .letters')];  // each div on the board 
-                                                // below injected into letterObjects, upon init
+let $boardArray = [...$('#board > .letters')];
 let $currentWord = $('#current-word');
 let $message = $('#message'); 
 let $submitButton = $('#submit'); 
@@ -30,12 +25,10 @@ let $foundWords = $('#found-words');
 let $timer = $('#timer'); 
 let $highScore = $('#high-score');
 
-
 // event listeners
 $('#board').click(clickBoard);
 $submitButton.click(submitWord);
 $replayButton.click(init);  
-
 
 // functions
 init();
@@ -66,7 +59,7 @@ function render() {
         if (letterObject.clickable === true || letterObject.clickable === false ) {
             $('#' + letterObject.cellIdx).css("background-color", "rgb(67, 159, 231)");
             $('#' + letterObject.cellIdx).css("color", "rgb(255, 255, 255)");
-        } else if (letterObject.clickable === 0) {  // Use value of 0 here to mesh with line 110
+        } else if (letterObject.clickable === 0) {  // Use value of 0 here to mesh with line 113
             $('#' + letterObject.cellIdx).css("background-color", "rgb(255, 255, 255)");
             $('#' + letterObject.cellIdx).css("color", "rgb(0, 0, 0)");
         }
@@ -75,9 +68,9 @@ function render() {
 
 function renderBoard() {
     letterObjects = [];
-    for (i = 0; i < 16; i++) {
+    for (let i = 0; i < 16; i++) {
         board[i] = letters[Math.floor(Math.random() * letters.length)]; 
-        $($boardArray[i]).text(board[i]);  // WTF?!?!?!?!!?!?
+        $($boardArray[i]).text(board[i]);
         letterObjects.push({
             cellIdx: $($boardArray[i]).attr('id'),
             rowIdx: parseInt($($boardArray[i]).attr('id').slice(1,2)),
@@ -138,13 +131,13 @@ function determineClickable() {
             letterObject.clickable = true;
         }
         if (usedLetters.includes(letterObject)) {
-            letterObject.clickable = 0;     // Use value of 0 here to mesh with line 110
+            letterObject.clickable = 0;     // Use value of 0 here to mesh with line 113
         }
     });
 }
 
 function addScore(word) {
-    if (word.length < 3) {  //use word.length to account for 'Qu'
+    if (word.length < 3) {  
         score += 0;
     } else if (word.length < 5) {
         score += 1;
@@ -162,7 +155,6 @@ function addScore(word) {
 function submitWord(click) {    
     usedLetters = [];
 
-    // to disable clicks after the game is over
     if (secondsRemaining > 0) {
         letterObjects.forEach(function(letterObject) {
             letterObject.clickable = true;
@@ -172,7 +164,7 @@ function submitWord(click) {
     if (foundWords.includes(wordInProgress)) {
         $message.text('Already found that one!');
     } else {
-        wordCheck(wordInProgress);      // need to call function to return insult/accolade  
+        wordCheck(wordInProgress);      
         if (wordCheck(wordInProgress)) {
             foundWords.push(wordInProgress);    
             $foundWords.append(`<li>${wordInProgress}</li>`);   
@@ -209,24 +201,3 @@ function timeFormat() {
     const displaySecs = (secondsRemaining % 60).toString().padStart(2, '0');
     return `${displayMins}:${displaySecs}`;
 }
-
-
-
-// challenges
-// timer // actually making it seems pretty simple based on using setTimeout or similar. Displaying it could be a bit tricky, or it could be a piece of cake. Only time(r) will tell.
-// establishing what's an allowable click when searching for a word. Maybe just find rowIdx and colIdx and only allow if within +/- 1 and hasn't been clicked. Maybe this isn't that challenging now that I type it out. Leaving this. Enjoy.
-// mostly linking to, but also checking the dictionary for word validity
-// maybe making a game over popup displaying final score
-// maybe making a local score board
-// maybe pause the submit listener on game over
-// keyboard word entry
-// multiplayer after the development of a backend
-// will be set up based on an id and a number of players (maybe with ids)
-// each player plays at their leisure, after each player finishes everybody 
-// receives a notification of the final rankings
-// maybe even allow for tournaments with winners and losers brackets
-// organize insults and accolades based on circumstance
-// e.g. three in a row -> 'you're on fire' a la NBA Jam
-// original music coming soon!
-// move messages up to a more visible location in browser
-// repair header in mobile version
